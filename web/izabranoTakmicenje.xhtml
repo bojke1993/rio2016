@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>poruka</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="templates/common.xhtml">
+            <ui:define name="header">
+                <h1>Rio 2016</h1>
+            </ui:define>
+            <ui:define name="content">
+                <h:form>
+                    <div align="right"><p:commandLink value="Vrati se na prethodnu" action="takm.xhtml"/></div>
+                </h:form>
+                <h:form>
+                    <p:dataTable id="table" value="#{org.izabraniSportisti}" var="i" style="width: 600px" rendered="#{org.ekipni==false}">
+                        <p:column>
+                            <f:facet name="header">Zemlja</f:facet>
+                            <p:graphicImage library="images" name="#{i.zemlja}.gif" style="width: 25px; height: 18px;" />
+                            <p:outputLabel value=" #{i.zemlja}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">Ime i prezime</f:facet>
+                                #{i.imePrezime}
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">izaberi</f:facet>
+                            <p:commandLink value="izaberiSportistu" action="#{org.potvrdiSportistu(i)}" update="table"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+                
+                <h:form>
+                    <p:dataTable id="table1" value="#{org.ekipe}" var="e" style="width: 600px" rendered="#{org.ekipni==true}">
+                        <p:column>
+                            <f:facet name="header">Reprezentacija</f:facet>
+                            <p:graphicImage library="images" name="#{e.zemlja}.gif" style="width: 25px; height: 18px;" />
+                            <p:outputLabel value=" #{e.zemlja}"/>
+                        </p:column>
+                        
+                        <p:column>
+                            <f:facet name="header">Potvrda</f:facet>
+                            <p:commandLink value="potvrdi ekipu" action="#{org.potvrdiEkipu(e)}" update="table1"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </ui:define>
+            <ui:define name="footer">
+                &copy;Ivan Bojovic
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

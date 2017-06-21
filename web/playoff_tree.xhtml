@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>ekipaPor</title>
+        <!--        <script type="text/javascript" src="js/jquery-3.1.1.min"/>-->        
+    </h:head>
+    <h:body>
+        <ui:composition template="templates/common.xhtml">
+            <ui:define name="header">
+                <h1>Rio 2016</h1>
+            </ui:define>
+            <ui:define name="content">
+                <h:form>
+                    <div align="right"><p:commandLink value="Vrati se na prethodnu" action="home_vodja.xhtml"/></div>
+                </h:form>
+                <h:form>
+                    <p:dataTable id="players" value="#{del.takmicari}" var="t">
+                        <p:column>
+                            #{t.imePrezime}
+                        </p:column> 
+                        <p:column>
+                            #{t.zemlja}
+                        </p:column> 
+                    </p:dataTable>
+
+                    <div id="customHandlers">
+                        <div class="demo"></div>   
+                    </div>                                
+
+                    <!-- ZA IMPORT -->
+                    <script type="text/javascript" src="js/jquery.bracket.min.js"></script>
+                    <link rel="stylesheet" type="text/css" href="css/jquery.bracket.min.css" />
+                    <script src="js/game_tree.js"/>
+                </h:form>
+            </ui:define>
+            <ui:define name="footer">
+                &copy;Ivan Bojovic
+            </ui:define>
+        </ui:composition>
+
+    </h:body>
+
+</html>

@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>pretraga</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="templates/common.xhtml">
+            <ui:define name="header">
+                <h1>Rio 2016</h1>
+            </ui:define>
+            <ui:define name="content">
+                <h:form>
+                    <div align="right"><p:commandLink value="Pocetna" action="index.xhtml"/></div>
+                </h:form>
+                <h2>Pretraga sportista</h2>
+                <h:form>
+                    <h:panelGrid columns="2">
+                        <p:outputLabel value="Ime i prezime: "/>
+                        <p:inputText value="#{pretraga.imePrezime}"/>
+                        
+                        <p:outputLabel value="Nacija:"/>
+                        <p:selectOneMenu value="#{pretraga.zemlja}">
+                            <f:selectItem value="#{null}" itemLabel="Sve zemlje" noSelectionOption="true"/>
+                            <f:selectItems value="#{controller.sveZemlje}" var="z" itemLabel="#{z}"/>
+                        </p:selectOneMenu>
+                        
+                        <p:outputLabel value="Sport"/>
+                        <p:selectOneMenu value="#{pretraga.sport}">
+                            <f:ajax listener="#{pretraga.trenutneDiscipline()}" render="speciality_selection"/>
+                            <f:selectItem value="#{null}" itemLabel="Svi sportovi" noSelectionOption="true"/>
+                            <f:selectItems value="#{pretraga.allSports}" var="s" itemLabel="#{s}"/>
+                        </p:selectOneMenu>
+                        
+                        <p:outputLabel value="Disciplina:"/>
+                        <p:selectOneMenu id="speciality_selection" value="#{pretraga.disciplina}">
+                            <f:selectItem value="#{null}" itemLabel="Sve discipline" noSelectionOption="true"/>
+                            <f:selectItems value="#{pretraga.dis}" var="d" itemLabel="#{d}" />
+                        </p:selectOneMenu>
+                        
+                        <p:outputLabel value="Pol: "/>
+                        <p:selectOneRadio value="#{pretraga.pol}">
+                            <f:selectItem itemValue="M" itemLabel="M"/>
+                            <f:selectItem itemValue="Z" itemLabel="Z"/>
+                        </p:selectOneRadio>
+                    </h:panelGrid>
+                    <p:commandButton type="submit" value="pretrazi" action="#{pretraga.pretrazi()}" ajax="false"/>
+                </h:form>
+                <h:form>
+                    <p:dataTable value="#{pretraga.pronadjeniSportisti}" var="p" rendered="#{pretraga.imaRes}" style="width: 400px;">
+                        <p:column style="width: 150px;"> 
+                            <f:facet name="header">Zemlja</f:facet>
+                            <p:graphicImage library="images" name="#{p.zemlja}.gif" style="width: 25px; height: 18px;" />
+                            <p:outputLabel value=" #{p.zemlja}"/>
+                        </p:column>
+                        
+                        <p:column>
+                            <f:facet name="header">Ime i prezime</f:facet>
+                                #{p.imePrezime}
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </ui:define>
+            <ui:define name="footer">
+                &copy;Ivan Bojovic
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>sportist</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="templates/common.xhtml">
+            <ui:define name="header">
+                <h1>Rio 2016</h1>
+            </ui:define>
+            <ui:define name="content">
+                <h:form>
+                    <div align="right"><p:commandLink value="LogOut" action="#{controller.logout()}"/></div>
+                    <div align="right"><p:commandLink value="Nazad" action="home_vodja.xhtml"/></div>
+                </h:form>
+                <h:form>
+                    Ukupan broj sportista iz ove zemlje je #{controller.ukupanBr}.<br/><br/>
+
+                    <p:breadCrumb>
+                        <p:menuitem value="Categories" action="home_vodja.xhtml"/>
+                    </p:breadCrumb>
+                    <p:selectOneListbox value="#{controller.sport}">
+                        <f:selectItems value="#{controller.allSports}" var="s" itemValue="#{s.naziv}" itemLabel="#{s.naziv} #{s.brUcesnika}"/>
+                    </p:selectOneListbox>
+                    <p:commandButton value="OK" action="#{controller.filtrirajSport()}"/>
+                </h:form>
+                <h:form>
+                    <p:dataTable value="#{controller.sviSportisti}" var="s" style="width: 500px;">
+                        <p:column style="width: 100px;"> 
+                            <f:facet name="header">Sport</f:facet>
+                            <p:outputLabel value=" #{s.sport}"/>
+                        </p:column>
+
+                        <p:column style="width: 150px;"> 
+                            <f:facet name="header">Disciplina</f:facet>
+                            <p:outputLabel value=" #{s.dis}"/>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">Ime i prezime</f:facet>
+                                #{s.imePrezime}
+                        </p:column>
+                    </p:dataTable>
+
+                </h:form>
+            </ui:define>
+            <ui:define name="footer">
+                &copy;Ivan Bojovic 
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>org</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="templates/common.xhtml">
+            <ui:define name="header">
+                <h1>Rio 2016</h1>
+            </ui:define>
+            <ui:define name="content">
+                <h:form>
+                    <div align="right"><p:commandLink value="LogOut" action="#{controller.logout()}"/></div>
+                </h:form>
+                <h:form>
+                    <p:outputLabel value="Organizator"/>
+                    <p:panelGrid columns="2">
+                        <p:outputLabel value="Ime:"/>
+                        <p:outputLabel value="#{controller.curUser.ime}"/>
+                                       
+                        <p:outputLabel value="Prezime:"/>
+                        <p:outputLabel value="#{controller.curUser.prezime}"/>
+                        
+                        <p:outputLabel value="Email"/>
+                        <p:outputLabel value="#{controller.curUser.email}"/>
+                    </p:panelGrid>
+                </h:form><br/>
+                Novi sport<br/>
+                <h:form>
+                    <h:panelGrid columns="2" >
+                        <p:outputLabel value="Ime sporta: "/>
+                        <p:inputText value="#{org.noviSport}"/>
+                        
+                        <p:outputLabel value="Vrsta"/>
+                        <p:selectOneMenu value="#{org.vrsta}" id="idVS">
+                            <f:selectItem itemValue="0" itemLabel="izaberite vrstu" noSelectionOption="true"/>
+                            <f:selectItem itemValue="individualni" itemLabel="individualni"/>
+                            <f:selectItem itemValue="ekipni" itemLabel="ekipni"/>
+                        </p:selectOneMenu>
+                        
+                    </h:panelGrid>
+                    <p:commandButton value="unesi sport" action="#{org.unesiNoviSport()}"/>
+                </h:form>
+                <br/><br/>
+                Nova disciplina
+                <h:form>
+                    <h:panelGrid columns="2">
+                        <p:outputLabel value="Sport"/>
+                        <p:selectOneMenu value="#{org.discSport}">
+                            <f:selectItem itemValue="0" itemLabel="izaberite sport" noSelectionOption="true"/>
+                            <f:selectItems value="#{org.allSports}" var="s" itemValue="#{s.naziv}" itemLabel="#{s.naziv}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Disciplina"/>
+                        <p:inputText value="#{org.novaDisc}"/>
+                    </h:panelGrid>
+                    <p:commandButton value="unesi disciplinu" action="#{org.unesiNovuDisciplinu()}"/>
+                </h:form>
+                <p:commandLink value="Ubaci novo takmicenje" action="#{org.prikaziSvaTakmicenja()}" />
+                <br/><br/>
+                Biranje delegata za sportove: <br/>
+                <h:form>
+                    <p:dataTable value="#{org.allSports}" var="s" >
+                        <p:column>
+                            <f:facet name="header">sport</f:facet>
+                                #{s.naziv}
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">delegat</f:facet>
+                            <p:outputLabel value="#{s.delegat}" rendered="#{s.imaDel>0}"/>
+                            <p:selectOneMenu value="#{org.izabraniDelegat}" rendered="#{s.imaDel==0}">
+                                <f:ajax listener="#{org.izaberiDelegata(s)}" />
+                                <f:selectItem itemValue="0" itemLabel="izaberi delegata" noSelectionOption="true" />
+                                <f:selectItems value="#{controller.allDelegates}" var="d" itemValue="#{d.korisnicko_ime}" itemLabel="#{d.korisnicko_ime}" />
+                            </p:selectOneMenu>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">sacuvaj</f:facet>
+                            <h:commandLink value="sacuvaj" action="#{org.izaberiDelegata(s)}" style="color: blue;" rendered="#{s.imaDel==0}"/>
+                            <p:outputLabel value="/" rendered="#{s.imaDel>0}"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </ui:define>
+            <ui:define name="footer">
+                &copy;Ivan Bojovic
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

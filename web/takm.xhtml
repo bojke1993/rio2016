@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>takm</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="templates/common.xhtml">
+            <ui:define name="header">
+                <h1>Rio 2016</h1>
+            </ui:define>
+            <ui:define name="content">
+                <h:form>
+                    <div align="right"><p:commandLink value="Vrati se na prethodnu" action="home_organizator.xhtml"/></div>
+                </h:form>
+                <h:form>
+                    <h:panelGrid columns="2">
+                        <p:outputLabel value="Sport: "/>
+                        <p:selectOneMenu value="#{org.noviSport}">
+                            <f:ajax listener="#{org.trenutneDiscipline()}" render="speciality_selection"/>
+                            <f:selectItem value="#{null}" itemLabel="Svi sportovi" noSelectionOption="true"/>
+                            <f:selectItems value="#{org.allSports}" var="s" itemLabel="#{s.naziv}" itemValue="#{s.naziv}"/> 
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Disciplina: "/>
+                        <p:selectOneMenu id="speciality_selection" value="#{org.novaDisc}">
+                            <f:selectItem itemValue="#{null}" itemLabel="Sve discipline" noSelectionOption="true" />
+                            <f:selectItems value="#{org.dis}" var="d" itemLabel="#{d}" itemValue="#{d}" />
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Vrsta: "/>
+                        <p:selectOneMenu value="#{org.vrsta}" >
+                            <f:selectItem itemValue="#{null}" itemLabel="izaberite vrstu" noSelectionOption="true"/>
+                            <f:selectItem itemValue="individualni" itemLabel="individualni"/>
+                            <f:selectItem itemValue="ekipni" itemLabel="ekipni"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Konkurencija: "/>
+                        <p:selectOneRadio value="#{org.konk}">
+                            <f:selectItem itemValue="M" itemLabel="Muskarci"/>
+                            <f:selectItem itemValue="Z" itemLabel="Zene"/>
+                        </p:selectOneRadio>
+
+                        <p:outputLabel value="Datum pocetka: "/>
+                        <h:panelGroup>
+                            <p:calendar mode="popup" showOn="both" mindate="15-06-2012" pattern="dd.MM.yyyy" effect="fadeIn" value="#{org.datumOd}">
+                                <p:ajax event="keyup" update="out1"/>
+                            </p:calendar>
+                            <h:outputText id="out1"/>
+                        </h:panelGroup> 
+                        
+                        <p:outputLabel value="Datum kraja "/>
+                        <h:panelGroup>
+                            <p:calendar mode="popup" showOn="both" mindate="15-06-2012" pattern="dd.MM.yyyy" effect="fadeIn" value="#{org.datumDo}">
+                                <p:ajax event="keyup" update="out2"/>
+                            </p:calendar>
+                            <h:outputText id="out2"/>
+                        </h:panelGroup> 
+                        <p:outputLabel value="Lokacija "/>
+                        <p:inputText value="#{org.lokacija}"/>
+                    </h:panelGrid>
+                    <h:commandButton value="unesi takmicenje" action="#{org.ubaciTakmicenje()}"/>
+                </h:form>
+                <h:form>
+                    <p:dataTable value="#{org.svaTakm}" var="t">
+                        <p:column>
+                            <f:facet name="header">sport</f:facet>
+                                #{t.sport}
+                        </p:column> 
+                        <p:column>
+                            <f:facet name="header">disciplina</f:facet>
+                                #{t.disciplina}
+                        </p:column> 
+                        <p:column>
+                            <f:facet name="header">konkurencija</f:facet>
+                                #{t.konkurencija}
+                        </p:column> 
+                        <p:column>
+                            <f:facet name="header">od</f:facet>
+                                #{t.datumOd}
+                        </p:column> 
+                        <p:column>
+                            <f:facet name="header">do</f:facet>
+                                #{t.datumDo}
+                        </p:column> 
+                        <p:column>
+                            <f:facet name="header">lokacija</f:facet>
+                                #{t.lokacija}
+                        </p:column> 
+                        <p:column>
+                            <f:facet name="header">izaberi</f:facet>
+                            <p:commandLink value="izaberi" action="#{org.izaberiSport(t.sport, t.disciplina, t.konkurencija)}"/>
+                        </p:column> 
+                    </p:dataTable>
+                </h:form>
+            </ui:define>
+            <ui:define name="footer">
+                &copy;Ivan Bojovic
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

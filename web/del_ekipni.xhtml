@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>ekipni</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="templates/common.xhtml">
+            <ui:define name="header">
+                <h1>Rio 2016</h1>
+            </ui:define>
+            <ui:define name="content">
+                <h:form>
+                    <div align="right"><p:commandLink value="Vrati se na prethodnu" action="home_delegat.xhtml"/></div>
+                </h:form>
+                <h:form>
+                    <p:panelGrid columns="2">
+                        <p:outputLabel value="sport"/>
+                        <p:outputLabel value="#{del.izabraniSport}"/>
+                        <p:outputLabel value="konkurencija"/>
+                        <p:outputLabel value="#{del.konk}"/>
+                    </p:panelGrid>
+                    
+                </h:form>
+                <h:form>
+                    <p:commandButton value="generisi grupe" action="#{del.generisiGrupe()}" update="grupe"/>
+                    <p:panelGrid columns="2" id="grupe">
+                        <p:dataTable value="#{del.grupaA}" var="a" style="width: 150px;">
+                            <p:column>
+                                <f:facet name="header">Grupa A</f:facet>
+                                <p:graphicImage library="images" name="#{a.zemlja}.gif" style="width: 25px; height: 18px;" />
+                                <p:outputLabel value=" #{a.zemlja}"/>
+                            </p:column>
+                        </p:dataTable>
+                        <p:dataTable value="#{del.grupaB}" var="b" style="width: 150px;">
+                            <p:column>
+                                <f:facet name="header">Grupa A</f:facet>
+                                <p:graphicImage library="images" name="#{b.zemlja}.gif" style="width: 25px; height: 18px;" />
+                                <p:outputLabel value=" #{b.zemlja}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </p:panelGrid>
+                </h:form>
+            </ui:define>
+            <ui:define name="footer">
+                &copy;Ivan Bojovic
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

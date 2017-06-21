@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>sveDiscipline</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="templates/common.xhtml">
+            <ui:define name="header">
+                <h1>Rio 2016</h1>
+            </ui:define>
+            <ui:define name="content">
+                <h:form>
+                    <div align="right"><p:commandLink value="LogOut" action="#{controller.logout()}"/></div>
+                    <div align="right"><p:commandLink value="Nazad" action="home_vodja.xhtml"/></div>
+                </h:form>
+                <h:form>
+                    Ukupan broj sportista iz ove zemlje je #{controller.ukupanBr}.<br/><br/>
+
+                    <p:breadCrumb >
+                        <p:menuitem value="Categories" action="sportisti.xhtml"/>
+                        <p:menuitem value="#{controller.sport}" action="sviSportovi.xhtml"/>
+                        <p:menuitem value="#{controller.disciplina}" action="#{controller.filtrirajDisc()}"/>
+                    </p:breadCrumb>
+                
+                    <p:dataTable value="#{controller.nadjeniSportisti}" var="s" style="width: 300px;">
+                        <p:column style="width: 150px;"> 
+                            <f:facet name="header">Disciplina</f:facet>
+                                #{s.dis}
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">Ime i prezime</f:facet>
+                                #{s.imePrezime}
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </ui:define>
+            <ui:define name="footer">
+                &copy;Ivan Bojovic 
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

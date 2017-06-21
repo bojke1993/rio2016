@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>individualni</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="templates/common.xhtml">
+            <ui:define name="header">
+                <h1>Rio 2016</h1>
+            </ui:define>
+            <ui:define name="content">
+                <h:form>
+                    <div align="right"><p:commandLink value="Vrati se na prethodnu" action="home_delegat.xhtml"/></div>
+                </h:form>
+                <h:form>
+                    <p:panelGrid columns="2">
+                        <p:outputLabel value="sport"/>
+                        <p:outputLabel value="#{del.izabraniSport}"/>
+                        <p:outputLabel value="disciplina"/>
+                        <p:outputLabel value="#{del.izabranaDisc}"/>
+                        <p:outputLabel value="konkurencija"/>
+                        <p:outputLabel value="#{del.konk}"/>
+                    </p:panelGrid>
+                    <p:dataTable id="takmicari" value="#{del.takmicari}" var="t" style="width: 580px;">
+                        <p:column>
+                            <f:facet name="header">zemlja</f:facet>
+                            <p:graphicImage library="images" name="#{t.zemlja}.gif" style="width: 25px; height: 18px;" />
+                            <p:outputLabel value=" #{t.zemlja}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">ime i prezime</f:facet>
+                                #{t.imePrezime}
+                        </p:column>
+                        <p:column style="width: 80px;">
+                            <f:facet name="header">rezultat</f:facet>
+                            <h:inputText style="width: 50px" value="#{del.res}" rendered="#{t.imaRez == 0}"/> 
+                            <p:outputLabel value="#{t.rez}" rendered="#{t.imaRez==1}"/>
+                        </p:column>
+                        <p:column style="width: 120px;">
+                            <f:facet name="header">unesi</f:facet>
+                            <p:commandButton value="unesi" action="#{del.unesiRezultate(t)}" update="takmicari" disabled="#{t.imaRez == 1}"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+                <h:form>
+                    <p:commandLink value="prikazi poredak" action="#{del.showTableRace()}" update="poredak"/>
+                    <p:dataTable id="poredak" value="#{del.tabela}" var="tab" style="width: 500px;" >
+                        <p:column>
+                            <f:facet name="header">poz.</f:facet>
+                                #{del.rbr()}
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">zemlja</f:facet>
+                            <p:graphicImage library="images" name="#{tab.zemlja}.gif" style="width: 25px; height: 18px;" />
+                            <p:outputLabel value=" #{tab.zemlja}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">ime i prezime</f:facet>
+                                #{tab.imePrezime}
+                        </p:column>
+                        <p:column style="width: 80px;">
+                            <f:facet name="header">rezultat</f:facet>
+                            <p:outputLabel value="#{tab.rez}"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </ui:define>
+            <ui:define name="footer">
+                &copy;Ivan Bojovic
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

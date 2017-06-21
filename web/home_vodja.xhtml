@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>vodja</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="templates/common.xhtml">
+            <ui:define name="header">
+                <h1>Rio 2016</h1>
+            </ui:define>
+            <ui:define name="content">
+                <h:form>
+                    <div align="right"><p:commandLink value="LogOut" action="#{controller.logout()}"/></div>
+                </h:form>
+                <h:form>
+                    <p:graphicImage library="images" name="#{controller.curUser.nacija}.gif"/><br/>
+                    <p:outputLabel value="#{controller.curUser.nacija}"/>
+                    <p:panelGrid columns="2">
+                        <p:outputLabel value="Ime:"/>
+                        <p:outputLabel value="#{controller.curUser.ime}"/>
+                                       
+                        <p:outputLabel value="Prezime:"/>
+                        <p:outputLabel value="#{controller.curUser.prezime}"/>
+                        
+                        <p:outputLabel value="Email"/>
+                        <p:outputLabel value="#{controller.curUser.email}"/>
+                    </p:panelGrid>
+                </h:form><br/><br/>
+                <h:form>
+                    <p:commandLink value="prijavi ekipu" action="#{controller.prijaviEkipniSport()}"/>
+                    <p:panelGrid columns="2">
+                        <p:outputLabel value="Ime i prezime:"/>
+                        <p:inputText value="#{controller.imePrez}"/>
+                                       
+                        <p:outputLabel value="Sport"/>
+                        <p:selectOneMenu value="#{controller.sport}">
+                            <f:ajax listener="#{controller.trenutneDiscipline()}" render="speciality_selection"/>
+                            <f:selectItem value="#{null}" itemLabel="Svi sportovi" noSelectionOption="true"/>
+                            <f:selectItems value="#{org.allSports}" var="s" itemValue="#{s.naziv}" itemLabel="#{s.naziv}"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Disciplina: "/>
+                        <p:selectOneMenu id="speciality_selection" value="#{controller.disciplina}">
+                            <f:selectItem itemValue="#{null}" itemLabel="Sve discipline" noSelectionOption="true" />
+                            <f:selectItems value="#{controller.dis}" var="d" itemLabel="#{d}" itemValue="#{d}"/>
+                        </p:selectOneMenu>
+                        
+                        <p:outputLabel value="Pol "/>
+                        <p:selectOneMenu  value="#{controller.pol}">
+                            <f:selectItem itemValue="#{null}" itemLabel="pol" noSelectionOption="true" />
+                            <f:selectItem itemValue="M"  itemLabel="Muskarac" />
+                            <f:selectItem itemValue="Z"  itemLabel="Zena" />
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <h:commandButton value="unesi sportistu" action="#{controller.ubaciSportistu()}"/>
+                </h:form>
+                
+                <h:form>
+                    <p:commandLink value="pregled svih sportista" action="#{controller.napuniListuSaSportistima()}">
+                        <f:actionListener binding="#{controller.brUcesnika()}"/>
+                    </p:commandLink>
+                </h:form>
+            </ui:define>
+            <ui:define name="footer">
+                &copy;Ivan Bojovic
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

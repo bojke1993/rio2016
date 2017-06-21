@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body> 
+        <ui:composition template="templates/common.xhtml">
+            <ui:define name="header">
+                <h1>Rio 2016</h1>
+            </ui:define>			
+            <ui:define name="content">
+                <h2>Login</h2>
+                <h:form >
+                    <h:panelGrid columns="3" id="log">
+                        <p:outputLabel value="Username"/>
+                        <p:inputText binding="#{controller.msg_user}" id="user" value="#{controller.username}" required="true" requiredMessage="Obavezno korisnicko ime"/>
+                        <p:messages for="user"/>
+                        
+                        <p:outputLabel value="Password"/>
+                        <p:password binding="#{controller.msg_pass}" id="pass" value="#{controller.password}" required="true" requiredMessage="Obavezna lozinka"/>
+                        <p:messages for="pass"/>
+                    </h:panelGrid>
+                    <p:commandButton value="login" action="#{controller.login()}" update="log" >
+                        <f:actionListener binding="#{org.sviSportovi()}"/>
+                    </p:commandButton><br/>
+                </h:form>
+                <h:form>
+                    <p:commandLink value="Registracija" action="registracija.xhtml">
+                        <f:actionListener binding="#{controller.napuniListuSaZemljama()}"/>
+                    </p:commandLink><br/>
+                    <p:commandLink value="Pretraga sportista" action="#{pretraga.idiNapretragu()}">
+                        <f:actionListener binding="#{controller.napuniListuSaZemljama()}"/>
+                    </p:commandLink>
+                </h:form>
+            </ui:define> 
+            <ui:define name="footer">
+                &copy; Ivan Bojovic
+            </ui:define>			
+        </ui:composition> 
+    </h:body> 
+</html>

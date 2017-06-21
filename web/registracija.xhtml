@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="templates/common.xhtml">
+            <ui:define name="header">
+                <h1>Rio 2016</h1>
+            </ui:define>
+            <ui:define name="content">
+                <h:form>
+                    <div align="right"><p:commandLink value="Pocetna" action="index.xhtml"/></div>
+                </h:form>
+                <h2>Registracija</h2>
+                <h:form>
+                    <h:panelGrid columns="3" id="reg">
+                        <p:outputLabel value="Korisnicko ime: "/>
+                        <p:inputText value="#{reg.username}" id="kor" required="true" requiredMessage="Obavezno korisnicko ime"/>
+                        <h:panelGroup><p:messages for="kor"/></h:panelGroup>
+
+                        <p:outputLabel value="Lozinka: "/>
+                        <p:password value="#{reg.password1}" id="loz1" required="true" requiredMessage="Obavezna lozinka"/>
+                        <h:panelGroup><p:messages for="loz1"/></h:panelGroup>
+
+                        <p:outputLabel value="Ponovi lozinku:"/>
+                        <p:password id="loz2" value="#{reg.password2}" binding="#{reg.msg_pass}" required="true" requiredMessage="Obavezna lozinka" />
+                        <h:panelGroup><p:messages for="loz2"/></h:panelGroup>
+                        
+                        <p:outputLabel value="Ime:"/>
+                        <p:inputText value="#{reg.ime}" id="ime" required="true" requiredMessage="Obavezno ime" />
+                        <h:panelGroup><p:messages for="ime"/></h:panelGroup>
+                        
+                        <p:outputLabel value="Prezime:"/>
+                        <p:inputText value="#{reg.prezime}" required="true" requiredMessage="Obavezno prezime" id="prez" />
+                        <h:panelGroup><p:messages for="prez"/></h:panelGroup>
+
+                        <p:outputLabel value="e-mail: "/>
+                        <p:inputText value="#{reg.email}" required="true" requiredMessage="Obavezan mail" id="mail" />
+                        <h:panelGroup><p:messages for="mail"/></h:panelGroup>
+
+                        <p:outputLabel value="Nacija:" id="zem" />
+                        <p:selectOneMenu value="#{reg.zemlja}">
+                            <f:selectItems value="#{controller.sveZemlje}" var="z" itemValue="#{z}"/> 
+                        </p:selectOneMenu>
+                        <h:panelGroup><p:messages for="zem"/></h:panelGroup>
+
+                        <p:outputLabel value="Tip korisnika: "/>
+                        <p:selectOneRadio value="#{reg.tip}" id="tip">
+                            <f:selectItem itemValue="vodja" itemLabel="vodja"/>
+                            <f:selectItem itemValue="delegat" itemLabel="delegat"/>
+                            <f:selectItem itemValue="org" itemLabel="org"/>
+                        </p:selectOneRadio>
+                        <h:panelGroup><p:messages for="tip"/></h:panelGroup>
+                    </h:panelGrid>
+                    <p:commandButton value="potvrdi" update="reg" action="#{reg.registruj()}"/>
+                </h:form>
+            </ui:define>
+            <ui:define name="footer">
+                &copy;Ivan Bojovic
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>delegat</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="templates/common.xhtml">
+            <ui:define name="header">
+                <h1>Rio 2016</h1>
+            </ui:define>
+            <ui:define name="content">
+                <h:form>
+                    <div align="right"><p:commandLink value="LogOut" action="#{controller.logout()}"/></div>
+                </h:form>
+                <h:form>
+                    <p:outputLabel value="Delegat"/>
+                    <p:panelGrid columns="2">
+                        <p:outputLabel value="Ime:"/>
+                        <p:outputLabel value="#{controller.curUser.ime}"/>
+
+                        <p:outputLabel value="Prezime:"/>
+                        <p:outputLabel value="#{controller.curUser.prezime}"/>
+
+                        <p:outputLabel value="Email"/>
+                        <p:outputLabel value="#{controller.curUser.email}"/>
+                    </p:panelGrid>
+                </h:form><br/>
+                <h:form>
+                    <p:selectOneMenu value="#{del.izabraniSport}">
+                        <f:selectItem value="#{null}" itemLabel="Izaberite sport" noSelectionOption="true"/>
+                        <f:selectItems value="#{controller.delagatoviSportovi}" var="s" itemLabel="#{s.naziv}" itemValue="#{s.naziv}"/>
+                    </p:selectOneMenu>
+                    <p:commandButton value="ok" action="#{del.delegatovaTakmicenja()}" update="takmicenja"/>
+                </h:form>
+                <h:form id="takmicenja">
+                    <p:dataTable value="#{del.svaTakmicenja}" var="t">
+                        <p:column>
+                            <f:facet name="header">disciplina</f:facet>
+                                #{t.disciplina}
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">konurencija</f:facet>
+                                #{t.konkurencija}
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">od</f:facet>
+                                #{t.datumOd}
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">do</f:facet>
+                                #{t.datumDo}
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">lokacija</f:facet>
+                                #{t.lokacija}
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">izaberi</f:facet>
+                            <p:commandLink value="organizuj" action="#{del.organizujTakmicenje(t.sport, t.disciplina, t.konkurencija)}" style="color: blue"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </ui:define>
+            <ui:define name="footer">
+                &copy;Ivan Bojovic
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+
